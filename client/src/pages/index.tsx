@@ -1,10 +1,18 @@
 import type { NextPage, NextPageContext } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { getSession, signIn, signOut, useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
 
-  return <div>Home</div>;
+  return (
+    <div>
+      {session?.user ? (
+        <button onClick={() => signOut}>Sign Out</button>
+      ) : (
+        <button onClick={() => signIn("google")}>Sign In</button>
+      )}
+    </div>
+  );
 };
 
 export async function getServerSideProps(ctx: NextPageContext) {
