@@ -17,7 +17,7 @@ const Home: NextPage = () => {
   return (
     <Box>
       {session?.user ? (
-        <button onClick={() => signOut}>Sign Out</button>
+        <button onClick={() => signOut()}>Sign Out</button>
       ) : (
         <>
           <Auth session={session} reloadSession={reloadSession} />
