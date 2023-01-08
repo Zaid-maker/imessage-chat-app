@@ -1,17 +1,29 @@
+import { Box } from "@chakra-ui/react";
 import type { NextPage, NextPageContext } from "next";
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
+import Auth from "../components/Auth/Auth";
 
 const Home: NextPage = () => {
   const { data: session } = useSession();
 
+  /**
+   * It creates a new event, dispatches it, and then returns nothing
+   */
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+
   return (
-    <div>
+    <Box>
       {session?.user ? (
         <button onClick={() => signOut}>Sign Out</button>
       ) : (
-        <button onClick={() => signIn("google")}>Sign In</button>
+        <>
+          <Auth session={session} reloadSession={reloadSession} />
+        </>
       )}
-    </div>
+    </Box>
   );
 };
 
