@@ -2,6 +2,7 @@ import { Button, Center, Image, Input, Stack, Text } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { ChangeEvent, FC, useState } from "react";
+import toast from "react-hot-toast";
 
 interface AuthProps {
   session: Session | null;
@@ -10,6 +11,20 @@ interface AuthProps {
 
 const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
   const [username, setUsername] = useState("");
+
+  const onSubmit = async () => {
+    if (!username) return;
+
+    try {
+      toast.success("Username successfully created");
+
+      /* A function that is passed to the Auth component. */
+      reloadSession();
+    } catch (error) {
+      toast.error("There was an error");
+      console.log("onSubmit Error", error);
+    }
+  };
 
   return (
     <Center height="100vh">
@@ -24,7 +39,9 @@ const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
                 setUsername(event.target.value)
               }
             />
-            <Button width="100%">Save</Button>
+            <Button onClick={onSubmit} width="100%">
+              Save
+            </Button>
           </>
         ) : (
           <>
