@@ -5,6 +5,7 @@ import { signIn } from "next-auth/react";
 import { ChangeEvent, FC, useState } from "react";
 import toast from "react-hot-toast";
 import UserOperations from "../../graphql/operations/users";
+import { CreateUsernameData, CreateUsernameVariables } from "../../utils/types";
 
 interface AuthProps {
   session: Session | null;
@@ -14,9 +15,10 @@ interface AuthProps {
 const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
   const [username, setUsername] = useState("");
 
-  const [createUsername, { data, loading, error }] = useMutation<>(
-    UserOperations.Mutations.createUsername
-  );
+  const [createUsername, { data, loading, error }] = useMutation<
+    CreateUsernameData,
+    CreateUsernameVariables
+  >(UserOperations.Mutations.createUsername);
 
   const onSubmit = async () => {
     if (!username) return;
