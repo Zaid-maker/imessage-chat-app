@@ -68,7 +68,7 @@ const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
             <Input
               placeholder="Enter a username"
               value={username}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 setUsername(event.target.value)
               }
             />
@@ -79,10 +79,10 @@ const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
         ) : (
           <>
             <Image alt="logo" height={100} src="/images/imessage-logo.png" />
-            <Text fontSize="4xl">MessengerQL</Text>
+            <Text fontSize="4xl">Single&apos;s Chat 😜</Text>
             <Text width="70%" align="center">
               Sign in with Google to send unlimited free messages to your
-              friends
+              friends.
             </Text>
             <Button
               onClick={() => signIn("google")}
