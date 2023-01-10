@@ -66,32 +66,28 @@ const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
           <>
             <Text fontSize="3xl">Create a Username</Text>
             <Input
-              placeholder="Enter a Username"
+              placeholder="Enter a username"
               value={username}
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setUsername(event.target.value)
               }
             />
-            <Button onClick={onSubmit} width="100%">
+            <Button onClick={onSubmit} width="100%" isLoading={loading}>
               Save
             </Button>
           </>
         ) : (
           <>
             <Image alt="logo" height={100} src="/images/imessage-logo.png" />
-            <Text fontSize="4xl">Single&apos;s Chat 😜</Text>
+            <Text fontSize="4xl">MessengerQL</Text>
             <Text width="70%" align="center">
               Sign in with Google to send unlimited free messages to your
-              friends.
+              friends
             </Text>
             <Button
               onClick={() => signIn("google")}
               leftIcon={
-                <Image
-                  src="/images/googlelogo.png"
-                  height="20px"
-                  alt="googlelogo"
-                />
+                <Image alt="logo" height="20px" src="/images/googlelogo.png" />
               }
             >
               Continue with Google
