@@ -1,8 +1,10 @@
+import { useMutation } from "@apollo/client";
 import { Button, Center, Image, Input, Stack, Text } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
 import { ChangeEvent, FC, useState } from "react";
 import toast from "react-hot-toast";
+import UserOperations from "../../graphql/operations/users";
 
 interface AuthProps {
   session: Session | null;
@@ -12,18 +14,47 @@ interface AuthProps {
 const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
   const [username, setUsername] = useState("");
 
+  const [createUsername, { data, loading, error }] = useMutation<>(
+    UserOperations.Mutations.createUsername
+  );
+
   const onSubmit = async () => {
     if (!username) return;
 
-    try {
-      toast.success("Username successfully created");
+    const onSubmit = async () => {
+      if (!username) return;
 
-      /* A function that is passed to the Auth component. */
-      reloadSession();
-    } catch (error) {
-      toast.error("There was an error");
-      console.log("onSubmit Error", error);
-    }
+      try {
+        const { data } = await createUsername({
+          variables: {
+            username,
+          },
+        });
+
+        if (!data?.createUsername) {
+          throw new Error();
+        }
+
+        if (data.createUsername.error) {
+          const {
+            createUsername: { error },
+          } = data;
+
+          toast.error(error);
+          return;
+        }
+
+        toast.success("Username successfully created");
+
+        /**
+         * Reload session to obtain new username
+         */
+        reloadSession();
+      } catch (error) {
+        toast.error("There was an error");
+        console.log("onSubmit error", error);
+      }
+    };
   };
 
   return (
