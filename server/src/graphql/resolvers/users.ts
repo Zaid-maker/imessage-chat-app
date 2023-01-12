@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import { GraphQLError } from "graphql";
-import { GraphQLContext } from "../../util/types";
+import { CreateUsernameResponse, GraphQLContext } from "../../util/types";
+import { verifyAndCreateUsername } from "../../util/functions";
 
 const resolvers = {
   Query: {
@@ -36,6 +37,26 @@ const resolvers = {
         console.log("Error", error);
         throw new GraphQLError(error?.message);
       }
+    },
+  },
+  Mutation: {
+    createUsername: async function createUsername(
+      _: any,
+      args: { username: string },
+      context: GraphQLContext
+    ): Promise<CreateUsernameResponse> {
+      const { session, prisma } = context;
+
+      if (!session?.user) {
+        return {
+          error: "Not authorized",
+        };
+      }
+
+      const { id } = session.user;
+      const { username } = args;
+
+      return await verifyAndCreateUsername({ userId: id, username }, prisma);
     },
   },
 };
