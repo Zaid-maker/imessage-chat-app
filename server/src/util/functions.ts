@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateUsernameResponse } from "./types";
+import { CreateUsernameResponse, ParticipantPopulated } from "./types";
 
 export async function verifyAndCreateUsername(
   args: {
@@ -42,4 +42,11 @@ export async function verifyAndCreateUsername(
       error: error?.message as string,
     };
   }
+}
+
+export function userIsConversationParticipant(
+  participants: Array<ParticipantPopulated>,
+  userId: string
+) {
+  return !!participants.find((participant) => participant.userId === userId);
 }
