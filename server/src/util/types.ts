@@ -30,6 +30,17 @@ export interface CreateUsernameResponse {
 }
 
 /**
+ * Messages
+ */
+
+export interface SendMessageArguments {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  body: string;
+}
+
+/**
  * Conversations
  */
 
