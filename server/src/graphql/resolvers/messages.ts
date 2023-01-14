@@ -41,6 +41,28 @@ const resolvers = {
         conversation.participants,
         userId
       );
+
+      /* Checking if the user is allowed to view the conversation. If not, it throws an error. */
+      if (!allowedToView) {
+        throw new Error("Not authorized");
+      }
+
+      try {
+        const message = await prisma.message.findMany({
+          where: {
+            conversationId,
+          },
+          include: messagePopulated,
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+
+        return message;
+      } catch (error: any) {
+        console.log("messages error", error);
+        throw new GraphQLError(error?.message);
+      }
     },
   },
 };
