@@ -38,15 +38,15 @@ const resolvers = {
         throw new GraphQLError("Conversation Not Found");
       }
 
-      const allowedToView = userIsConversationParticipant(
-        conversation.participants,
-        userId
-      );
+      //const allowedToView = userIsConversationParticipant(
+      //  conversation.participants,
+      //  userId
+      //);
 
       /* Checking if the user is allowed to view the conversation. If not, it throws an error. */
-      if (!allowedToView) {
-        throw new Error("Not authorized");
-      }
+      //if (!allowedToView) {
+      //  throw new Error("Not authorized");
+      //}
 
       try {
         const message = await prisma.message.findMany({
