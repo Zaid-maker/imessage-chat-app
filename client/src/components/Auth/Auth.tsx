@@ -23,40 +23,36 @@ const Auth: FC<AuthProps> = ({ session, reloadSession }) => {
   const onSubmit = async () => {
     if (!username) return;
 
-    const onSubmit = async () => {
-      if (!username) return;
+    try {
+      const { data } = await createUsername({
+        variables: {
+          username,
+        },
+      });
 
-      try {
-        const { data } = await createUsername({
-          variables: {
-            username,
-          },
-        });
-
-        if (!data?.createUsername) {
-          throw new Error();
-        }
-
-        if (data.createUsername.error) {
-          const {
-            createUsername: { error },
-          } = data;
-
-          toast.error(error);
-          return;
-        }
-
-        toast.success("Username successfully created");
-
-        /**
-         * Reload session to obtain new username
-         */
-        reloadSession();
-      } catch (error) {
-        toast.error("There was an error");
-        console.log("onSubmit error", error);
+      if (!data?.createUsername) {
+        throw new Error();
       }
-    };
+
+      if (data.createUsername.error) {
+        const {
+          createUsername: { error },
+        } = data;
+
+        toast.error(error);
+        return;
+      }
+
+      toast.success("Username successfully created");
+
+      /**
+       * Reload session to obtain new username
+       */
+      reloadSession();
+    } catch (error) {
+      toast.error("There was an error");
+      console.log("onSubmit error", error);
+    }
   };
 
   return (
