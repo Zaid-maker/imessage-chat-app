@@ -27,7 +27,7 @@ export interface SubscriptionContext extends Context {
 }
 
 /**
- * Users Types
+ * Users
  */
 export interface User {
   id: string;
@@ -44,7 +44,7 @@ export interface SearchUsersResponse {
 }
 
 /**
- * Messages Types
+ * Messages
  */
 export interface SendMessageArguments {
   id: string;

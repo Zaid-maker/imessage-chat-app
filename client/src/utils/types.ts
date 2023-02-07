@@ -10,3 +10,16 @@ export interface CreateUsernameData {
     error: string;
   };
 }
+
+export interface SearchUsersInputs {
+  username: string;
+}
+
+export interface SearchUsersDara {
+  searchUsers: Array<SearchedUser>;
+}
+
+export interface SearchedUser {
+  id: string;
+  username: string;
+}
