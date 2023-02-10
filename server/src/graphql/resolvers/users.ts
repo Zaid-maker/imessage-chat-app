@@ -5,39 +5,7 @@ import { CreateUsernameResponse, GraphQLContext } from "../../util/types";
 
 const resolvers = {
   Query: {
-    searchUsers: async function searchUsers(
-      _: any,
-      args: { username: string },
-      context: GraphQLContext
-    ): Promise<Array<User>> {
-      const { username: searchedUsername } = args;
-      const { prisma, session } = context;
-
-      if (!session?.user) {
-        throw new GraphQLError("Not authorized");
-      }
-
-      const {
-        user: { username: myUsername },
-      } = session;
-
-      try {
-        const users = await prisma.user.findMany({
-          where: {
-            username: {
-              contains: searchedUsername,
-              not: myUsername,
-              mode: "insensitive",
-            },
-          },
-        });
-
-        return users;
-      } catch (error: any) {
-        console.log("error", error);
-        throw new GraphQLError(error?.message);
-      }
-    },
+    searchUsers: () => {},
   },
   Mutation: {
     createUsername: async function createUsername(
@@ -47,9 +15,10 @@ const resolvers = {
     ): Promise<CreateUsernameResponse> {
       const { session, prisma } = context;
 
+      /* Checking if the user is logged in. If not, it returns an error. */
       if (!session?.user) {
         return {
-          error: "Not authorized",
+          error: "Not Authorized, Make sure you are logged in!",
         };
       }
 
