@@ -14,7 +14,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.5",
     "@next-auth/prisma-adapter": "^1.0.5",
-    "@prisma/client": "^4.7.1",
+    "@prisma/client": "^4.15.0",
     "bson": "^4.7.0",
     "date-fns": "^2.29.3",
     "framer-motion": "^7.6.18",
