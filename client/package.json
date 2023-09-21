@@ -18,7 +18,7 @@
     "bson": "^4.7.0",
     "date-fns": "^2.29.3",
     "framer-motion": "^7.6.18",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-ws": "^5.11.2",
     "next": "13.0.6",
     "next-auth": "^4.18.0",
